@@ -41,7 +41,7 @@ while(True):
     res = center[label.flatten()]
     res2 = res.reshape((frame.shape))
 
-    # cv2.imshow('img', cv2.resize(res2, (640, 360)))
+    cv2.imshow('img', cv2.resize(res2, (640, 360)))
 
     img_gray = cv2.cvtColor(res2, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(img_gray, (5, 5), cv2.BORDER_DEFAULT)
@@ -88,7 +88,7 @@ while(True):
         cv2.rectangle(frame, (320, 180), (960, 540), (255, 0, 0), 5)
         img = cv2.drawContours(frame, filtered_contours, -1, (0, 0, 255), 2) if len(filtered_contours) > 0 else frame
         resized_img = cv2.resize(img, (1280, 720))
-        # cv2.imshow('image',img)
+        cv2.imshow('image',img)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
