@@ -260,6 +260,7 @@
     "react-material-ui-carousel": "^2.1.2",
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.5",
+    "socket.io-client": "^3.1.0",
     "source-map-support": "^0.5.19",
     "styled-components": "^5.2.1"
   },

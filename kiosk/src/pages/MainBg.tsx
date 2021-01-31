@@ -28,7 +28,7 @@ const promiseTimeOut = (time) => {
   });
 };
 
-const MainBg = () => {
+const MainBg = ({ socket }: { socket: any }) => {
   const [count, setCount] = useState<number | undefined>(undefined);
 
   const history = useHistory();
@@ -45,7 +45,10 @@ const MainBg = () => {
   };
 
   useEffect(() => {
-    startCountDown();
+    socket.on('face', (msg) => {
+      console.log('face detected');
+      startCountDown();
+    });
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import styled from 'styled-components';
 import chevronRight from '../../assets/chevronRight.svg';
@@ -26,17 +26,24 @@ const H1 = styled.h1`
   color: #1565c0;
   font-weight: 300;
   font-size: 3rem;
+  margin-bottom: 4rem;
+`;
+
+const Main = styled.div`
+  display: flex;
 `;
 
 const Language = () => (
   <Card>
     <H1>We’re glad you’re here</H1>
-    <MultiSelect width={10} list={['hey', 'hey2', 'hey3']} />
+    <MultiSelect width={10} list={['English', 'Español', 'Chinese']} />
   </Card>
 );
 
-const CarouselScreen = () => {
+const CarouselScreen = ({ socket }: { socket: any }) => {
+  // const CarouselScreen = () => {
   const [index, setIndex] = useState(0);
+
   return (
     <Bg>
       <img alt="left arrow" src={chevronLeft} className="floating_left" />

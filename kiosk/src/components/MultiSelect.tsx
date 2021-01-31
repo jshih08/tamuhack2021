@@ -11,6 +11,7 @@ const Item = styled.div`
     selected ? 'white' : '#333'};
   height: 4rem;
   box-sizing: border-box;
+  transition: color 0.5s;
 `;
 
 const Indicator = styled.span`
@@ -21,6 +22,8 @@ const Indicator = styled.span`
   background-color: #556dea;
   width: 100%;
   height: 4rem;
+  transition: all 0.5s;
+  border-radius: 1rem;
 `;
 
 const Bg = styled.div`
@@ -45,7 +48,7 @@ const MultiSelect = ({
           selected={tabIndex === index}
           onClick={() => setTabIndex(index)}
         >
-          item
+          {item}
         </Item>
       ))}
     </Bg>
