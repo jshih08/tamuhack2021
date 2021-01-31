@@ -5,17 +5,19 @@ from statistics import mean
 
 # swiper start swiping
 
+# (720, 1280, 3)
+
 def leftOut(x):
-    return x < 580
+    return x < 320
 
 def rightOut(x):
-    return x > 1340
+    return x > 960
 
 def topOut(y):
-    return y < 270
+    return y < 180
 
 def bottomOut(y):
-    return y > 810
+    return y > 540
 
 def inBounds(x, y):
     return not (leftOut(x) or rightOut(x) or topOut(y) or bottomOut(y))
@@ -38,12 +40,18 @@ while(True):
     center = np.uint8(center)
     res = center[label.flatten()]
     res2 = res.reshape((frame.shape))
-    # cv2.imshow('img', cv2.resize(res2, (720, 450)))
+
+    # cv2.imshow('img', cv2.resize(res2, (640, 360)))
 
     img_gray = cv2.cvtColor(res2, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(img_gray, (5, 5), cv2.BORDER_DEFAULT)
+
+    cv2.imshow('img', cv2.resize(blurred, (640, 320)))
+
     ret, im = cv2.threshold(img_gray, 140, 255, cv2.THRESH_BINARY)
-    # cv2.imshow('img', cv2.resize(im, (720, 450)))
+
+    # cv2.imshow('img', cv2.resize(im, (640, 320)))
+
     contours, hierarchy = cv2.findContours(im, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     filtered_contours = [contour for contour in filter(lambda c: cv2.contourArea(c) > 1000 and cv2.contourArea(c) < 400000, contours)]
 
@@ -55,7 +63,7 @@ while(True):
         minY = min(y)
         avgX = mean([x[match] for match in np.where(y == minY)[0]])
         if draw:
-            cv2.circle(frame, (avgX, minY), 50, (0, 255, 0), -1)
+            cv2.circle(frame, (avgX, minY), 25, (0, 255, 0), -1)
 
         in_frame = inBounds(avgX, minY)
 
@@ -77,10 +85,10 @@ while(True):
         # print("Hand not found")
 
     if draw:
-        cv2.rectangle(frame, (580, 270), (1340, 810), (255, 0, 0), 5)
-        img = cv2.drawContours(frame, filtered_contours, -1, (0, 0, 255), 10) if len(filtered_contours) > 0 else frame
-        resized_img = cv2.resize(img, (960, 540))
-        cv2.imshow('image',img)
+        cv2.rectangle(frame, (320, 180), (960, 540), (255, 0, 0), 5)
+        img = cv2.drawContours(frame, filtered_contours, -1, (0, 0, 255), 2) if len(filtered_contours) > 0 else frame
+        resized_img = cv2.resize(img, (1280, 720))
+        # cv2.imshow('image',img)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
