@@ -36,7 +36,20 @@ const Main = styled.div`
 const Language = () => (
   <Card>
     <H1>We’re glad you’re here</H1>
-    <MultiSelect width={10} list={['English', 'Español', 'Chinese']} />
+    <Main>
+      <MultiSelect width={10} list={['English', 'Español', 'Chinese']} />
+      {/* <img src={} /> */}
+    </Main>
+  </Card>
+);
+
+const Reservation = () => (
+  <Card>
+    <H1>We’re glad you’re here</H1>
+    <Main>
+      <MultiSelect width={30} list={['chinglish', 'Español', 'Chinese']} />
+      {/* <img src={} /> */}
+    </Main>
   </Card>
 );
 
@@ -56,6 +69,7 @@ const CarouselScreen = ({ socket }: { socket: any }) => {
         className="carousel"
       >
         <Language />
+        <Reservation />
       </Carousel>
       <img alt="right arrow" src={chevronRight} className="floating_right" />
     </Bg>
