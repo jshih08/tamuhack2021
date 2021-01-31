@@ -18,6 +18,8 @@ while True:
         minNeighbors=3,
     )
 
+    print(len(faces))
+
     # Draw a rectangle around the faces
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
