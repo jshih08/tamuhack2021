@@ -56,6 +56,7 @@ def processing():
           if counter > 10:
               print('found face')
               socketIo.emit('face')
+              socketIo.sleep(0)
               break
       if len(faces) == 0:
           counter = 0
@@ -96,18 +97,25 @@ def processing():
                 if leftOut(avgX):
                     print("Left Swipe")
                     socketIo.emit('swipe_left')
+                    socketIo.sleep(0)
                 if rightOut(avgX):
                     print("Right Swipe")
                     socketIo.emit('swipe_right')
+                    socketIo.sleep(0)
                 if topOut(minY):
                     print("Swipe Up")
                     socketIo.emit('swipe_up')
+                    socketIo.sleep(0)
                 if bottomOut(minY):
                     print("Swipe Down")
                     socketIo.emit('swipe_down')
-            # print("CHECK" if in_frame else "OUT")
+                    socketIo.sleep(0)
+            print("CHECK" if in_frame else "OUT")
             if in_frame:
                 socketIo.emit('check')
+                socketIo.sleep(0)
+
+        # print(f"Hand detected {'in' if in_frame else 'out of'} bounds.")
     else:
         in_frame = False
 

@@ -41,7 +41,7 @@ while(True):
     res = center[label.flatten()]
     res2 = res.reshape((frame.shape))
 
-    # cv2.imshow('img', cv2.resize(res2, (640, 360)))
+    cv2.imshow('img', cv2.resize(res2, (640, 360)))
 
     img_gray = cv2.cvtColor(res2, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(img_gray, (5, 5), cv2.BORDER_DEFAULT)
