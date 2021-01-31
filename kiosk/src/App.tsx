@@ -15,7 +15,7 @@ export default function App() {
         <Carousel socket={socket} />
       </Route>
       <Route path="/">
-        <MainBg socket={socket} />
+        <Carousel socket={socket} />
       </Route>
     </Router>
   );
