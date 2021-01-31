@@ -33,6 +33,12 @@ const Main = styled.div`
   display: flex;
 `;
 
+const H2 = styled.div`
+  font-weight: 300;
+  justify-content: center;
+  display: flex;
+`;
+
 const Language = () => (
   <Card>
     <H1>We’re glad you’re here</H1>
@@ -43,13 +49,41 @@ const Language = () => (
   </Card>
 );
 
-const Reservation = () => (
+const Loading = () => (
   <Card>
-    <H1>We’re glad you’re here</H1>
+    <H1>Just a moment while we locate your reservation...</H1>
     <Main>
-      <MultiSelect width={30} list={['chinglish', 'Español', 'Chinese']} />
-      {/* <img src={} /> */}
+      
     </Main>
+  </Card>
+);
+
+const Military = () => (
+  <Card>
+    <H1>Are you in US military?</H1>
+    <H2>
+    <MultiSelect width={40} list={['Active military duty - on orders', 'Active military duty - not on orders', 'Not military']} />
+
+    </H2>
+  </Card>
+);
+
+const Loading2 = () => (
+  <Card>
+    <H1>Just a moment while we fufill your request...</H1>
+    <Main>
+      
+    </Main>
+  </Card>
+);
+
+const BagCheck = () => (
+  <Card>
+    <H1>Will you be checking bags today?</H1>
+    <H2>
+    <MultiSelect width={40} list={['1 bag - $25', '2 bags - $60', '3 bags - $210']} />
+
+    </H2>
   </Card>
 );
 
@@ -69,7 +103,10 @@ const CarouselScreen = ({ socket }: { socket: any }) => {
         className="carousel"
       >
         <Language />
-        <Reservation />
+        <Loading />
+        <Military />
+        <Loading2 />
+        <BagCheck />
       </Carousel>
       <img alt="right arrow" src={chevronRight} className="floating_right" />
     </Bg>
