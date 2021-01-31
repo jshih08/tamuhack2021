@@ -5,6 +5,7 @@ import chevronRight from '../../assets/chevronRight.svg';
 import chevronLeft from '../../assets/chevronLeft.svg';
 import table from '../../assets/table.png';
 import MultiSelect from '../components/MultiSelect';
+import Clock from '../components/Clock';
 import logo from '../../assets/logo.png';
 import swipe from '../../assets/swipe.png';
 
