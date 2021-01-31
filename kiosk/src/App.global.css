@@ -16,6 +16,25 @@ body {
   flex: 1;
 }
 
+.float_up {
+  animation-name: float_up;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes float_up {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  50% {
+    transform: translate(0px, -30px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
 .floating_left {
   animation-name: floating_left;
   animation-duration: 3s;

@@ -5,6 +5,8 @@ import chevronRight from '../../assets/chevronRight.svg';
 import chevronLeft from '../../assets/chevronLeft.svg';
 import table from '../../assets/table.png';
 import MultiSelect from '../components/MultiSelect';
+import logo from '../../assets/logo.png';
+import swipe from '../../assets/swipe.png';
 
 const Card = styled.div`
   background-color: white;
@@ -16,6 +18,9 @@ const Card = styled.div`
   margin-top: 13vh;
   margin-left: 2rem;
   margin-right: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 `;
 
 const Bg = styled.div`
@@ -39,6 +44,7 @@ const Subtitle = styled.h2`
 const Main = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const H2 = styled.div`
@@ -50,9 +56,34 @@ const H2 = styled.div`
 const Language = () => (
   <Card>
     <H1>We’re glad you’re here</H1>
-    <Main>
+    <Main style={{ justifyContent: 'space-between' }}>
       <MultiSelect width={10} list={['English', 'Español', 'Chinese']} />
-      {/* <img src={} /> */}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '25rem',
+          justifySelf: 'flex-end',
+        }}
+      >
+        <img
+          src={swipe}
+          alt="swipe"
+          style={{ width: '10rem', height: '10rem' }}
+          className="float_up"
+        />
+        <p
+          style={{
+            textAlign: 'center',
+            fontSize: '1.5rem',
+            color: '#555',
+            marginLeft: '3rem',
+          }}
+        >
+          Swipe up or down in front of the camera to change languages
+        </p>
+      </div>
     </Main>
   </Card>
 );
@@ -102,15 +133,16 @@ const Reservation = () => (
 );
 const Loading = () => (
   <Card>
-    <H1>Just a moment while we locate your reservation...</H1>
-    <Main></Main>
+    <Main>
+      <H1>Just a moment while we locate your reservation...</H1>
+    </Main>
   </Card>
 );
 
 const Military = () => (
   <Card>
     <H1>Are you in US military?</H1>
-    <H2>
+    <Main>
       <MultiSelect
         width={40}
         list={[
@@ -119,14 +151,13 @@ const Military = () => (
           'Not military',
         ]}
       />
-    </H2>
+    </Main>
   </Card>
 );
 
 const Loading2 = () => (
   <Card>
     <H1>Just a moment while we fufill your request...</H1>
-    <Main></Main>
   </Card>
 );
 
@@ -167,6 +198,11 @@ const CarouselScreen = ({ socket }: { socket: any }) => {
         <BagCheck />
       </Carousel>
       <img alt="right arrow" src={chevronRight} className="floating_right" />
+      <img
+        alt="logo"
+        src={logo}
+        style={{ position: 'absolute', bottom: 0, left: '2rem' }}
+      />
     </Bg>
   );
 };
