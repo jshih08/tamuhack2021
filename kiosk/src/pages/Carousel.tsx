@@ -53,11 +53,15 @@ const H2 = styled.div`
   display: flex;
 `;
 
-const Language = () => (
+const Language = ({ socket }: { socket: any }) => (
   <Card>
     <H1>We’re glad you’re here</H1>
     <Main style={{ justifyContent: 'space-between' }}>
-      <MultiSelect width={10} list={['English', 'Español', 'Chinese']} />
+      <MultiSelect
+        socket={socket}
+        width={10}
+        list={['English', 'Español', 'Chinese']}
+      />
       <div
         style={{
           display: 'flex',
@@ -88,7 +92,7 @@ const Language = () => (
   </Card>
 );
 
-const ReviewReservation = () => (
+const ReviewReservation = ({ socket }: { socket: any }) => (
   <Card>
     <H1>Review your reservation</H1>
     <Main>
@@ -98,6 +102,7 @@ const ReviewReservation = () => (
         style={{ width: '70%', marginRight: '1rem' }}
       />
       <MultiSelect
+        socket={socket}
         width={17}
         list={['Change Seat', 'Change Flight', 'All Good!']}
       />
@@ -105,21 +110,22 @@ const ReviewReservation = () => (
   </Card>
 );
 
-const Traveling = () => (
+const Traveling = ({ socket }: { socket: any }) => (
   <Card>
     <H1>Are you traveling with a child under the age of 12?</H1>
     <Main>
-      <MultiSelect width={10} list={['Yes', 'No']} />
+      <MultiSelect socket={socket} width={10} list={['Yes', 'No']} />
     </Main>
   </Card>
 );
 
-const Reservation = () => (
+const Reservation = ({ socket }: { socket: any }) => (
   <Card>
     <H1>Let's locate your reservation</H1>
     <Subtitle>Please select:</Subtitle>
     <Main>
       <MultiSelect
+        socket={socket}
         width={30}
         list={[
           'Face Identification',
@@ -131,7 +137,7 @@ const Reservation = () => (
     </Main>
   </Card>
 );
-const Loading = () => (
+const Loading = ({ socket }: { socket: any }) => (
   <Card>
     <Main>
       <H1>Just a moment while we locate your reservation...</H1>
@@ -139,11 +145,12 @@ const Loading = () => (
   </Card>
 );
 
-const Military = () => (
+const Military = ({ socket }: { socket: any }) => (
   <Card>
     <H1>Are you in US military?</H1>
     <Main>
       <MultiSelect
+        socket={socket}
         width={40}
         list={[
           'Active military duty - on orders',
@@ -161,11 +168,12 @@ const Loading2 = () => (
   </Card>
 );
 
-const BagCheck = () => (
+const BagCheck = ({ socket }: { socket: any }) => (
   <Card>
     <H1>Will you be checking bags today?</H1>
     <H2>
       <MultiSelect
+        socket={socket}
         width={40}
         list={['1 bag - $25', '2 bags - $60', '3 bags - $210']}
       />
@@ -199,14 +207,14 @@ const CarouselScreen = ({ socket }: { socket: any }) => {
         onChange={setIndex}
         className="carousel"
       >
-        <Language />
-        <Reservation />
-        <Loading />
-        <Traveling />
-        <Military />
+        <Language socket={socket} />
+        <Reservation socket={socket} />
+        <Loading socket={socket} />
+        <Traveling socket={socket} />
+        <Military socket={socket} />
         <Loading2 />
-        <ReviewReservation />
-        <BagCheck />
+        <ReviewReservation socket={socket} />
+        <BagCheck socket={socket} />
       </Carousel>
       <img alt="right arrow" src={chevronRight} className="floating_right" />
       <img
