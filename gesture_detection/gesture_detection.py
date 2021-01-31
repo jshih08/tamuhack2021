@@ -25,7 +25,7 @@ def inBounds(x, y):
 cap = cv2.VideoCapture(0)
 
 in_frame = False
-draw = True
+draw = False
 
 while(True):
     ret, frame = cap.read()
@@ -88,7 +88,7 @@ while(True):
         cv2.rectangle(frame, (320, 180), (960, 540), (255, 0, 0), 5)
         img = cv2.drawContours(frame, filtered_contours, -1, (0, 0, 255), 2) if len(filtered_contours) > 0 else frame
         resized_img = cv2.resize(img, (1280, 720))
-        # cv2.imshow('image',img)
+        cv2.imshow('image',img)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
