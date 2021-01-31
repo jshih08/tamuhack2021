@@ -7,6 +7,7 @@ import table from '../../assets/table.png';
 import kiosk from '../../assets/kiosk.png';
 import hand from '../../assets/hand.png';
 import MultiSelect from '../components/MultiSelect';
+import Clock from '../components/Clock';
 import logo from '../../assets/logo.png';
 import swipe from '../../assets/swipe.png';
 import { Checkmark } from 'react-checkmark';
