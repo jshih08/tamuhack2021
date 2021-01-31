@@ -56,7 +56,7 @@ def processing():
           if counter > 10:
               print('found face')
               socketIo.emit('face')
-              socketIo.sleep(0)
+              socketIo.sleep(2)
               break
       if len(faces) == 0:
           counter = 0
