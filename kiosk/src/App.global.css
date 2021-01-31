@@ -77,6 +77,25 @@ body {
   }
 }
 
+.float_hand {
+  animation-name: float_hand;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes float_hand {
+  0% {
+    transform: translate(5px, 0px);
+  }
+  50% {
+    transform: translate(-100px, 50px);
+  }
+  100% {
+    transform: translate(5px, 0px);
+  }
+}
+
 button {
   background-color: white;
   padding: 10px 20px;
