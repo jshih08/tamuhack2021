@@ -4,10 +4,13 @@ import styled from 'styled-components';
 import chevronRight from '../../assets/chevronRight.svg';
 import chevronLeft from '../../assets/chevronLeft.svg';
 import table from '../../assets/table.png';
+import kiosk from '../../assets/kiosk.png';
+import hand from '../../assets/hand.png';
 import MultiSelect from '../components/MultiSelect';
 import Clock from '../components/Clock';
 import logo from '../../assets/logo.png';
 import swipe from '../../assets/swipe.png';
+import { Checkmark } from 'react-checkmark';
 
 const Card = styled.div`
   background-color: white;
@@ -54,11 +57,15 @@ const H2 = styled.div`
   display: flex;
 `;
 
-const Language = () => (
+const Language = ({ socket }: { socket: any }) => (
   <Card>
     <H1>We’re glad you’re here</H1>
     <Main style={{ justifyContent: 'space-between' }}>
-      <MultiSelect width={10} list={['English', 'Español', 'Chinese']} />
+      <MultiSelect
+        socket={socket}
+        width={10}
+        list={['English', 'Español', 'Chinese']}
+      />
       <div
         style={{
           display: 'flex',
@@ -89,7 +96,7 @@ const Language = () => (
   </Card>
 );
 
-const ReviewReservation = () => (
+const ReviewReservation = ({ socket }: { socket: any }) => (
   <Card>
     <H1>Review your reservation</H1>
     <Main>
@@ -99,6 +106,7 @@ const ReviewReservation = () => (
         style={{ width: '70%', marginRight: '1rem' }}
       />
       <MultiSelect
+        socket={socket}
         width={17}
         list={['Change Seat', 'Change Flight', 'All Good!']}
       />
@@ -106,21 +114,22 @@ const ReviewReservation = () => (
   </Card>
 );
 
-const Traveling = () => (
+const Traveling = ({ socket }: { socket: any }) => (
   <Card>
     <H1>Are you traveling with a child under the age of 12?</H1>
     <Main>
-      <MultiSelect width={10} list={['Yes', 'No']} />
+      <MultiSelect socket={socket} width={10} list={['Yes', 'No']} />
     </Main>
   </Card>
 );
 
-const Reservation = () => (
+const Reservation = ({ socket }: { socket: any }) => (
   <Card>
     <H1>Let's locate your reservation</H1>
     <Subtitle>Please select:</Subtitle>
     <Main>
       <MultiSelect
+        socket={socket}
         width={30}
         list={[
           'Face Identification',
@@ -132,7 +141,7 @@ const Reservation = () => (
     </Main>
   </Card>
 );
-const Loading = () => (
+const Loading = ({ socket }: { socket: any }) => (
   <Card>
     <Main>
       <H1>Just a moment while we locate your reservation...</H1>
@@ -140,11 +149,12 @@ const Loading = () => (
   </Card>
 );
 
-const Military = () => (
+const Military = ({ socket }: { socket: any }) => (
   <Card>
     <H1>Are you in US military?</H1>
     <Main>
       <MultiSelect
+        socket={socket}
         width={40}
         list={[
           'Active military duty - on orders',
@@ -162,11 +172,12 @@ const Loading2 = () => (
   </Card>
 );
 
-const BagCheck = () => (
+const BagCheck = ({ socket }: { socket: any }) => (
   <Card>
     <H1>Will you be checking bags today?</H1>
     <H2>
       <MultiSelect
+        socket={socket}
         width={40}
         list={['1 bag - $25', '2 bags - $60', '3 bags - $210']}
       />
@@ -174,13 +185,84 @@ const BagCheck = () => (
   </Card>
 );
 
+const End = () => (
+  <Card>
+    <Checkmark size="xxLarge" />
+    <Subtitle style={{ textAlign: 'center' }}>
+      Your ticket is being printed!
+    </Subtitle>
+  </Card>
+);
+
+const Tutorial = ({ socket }: { socket: any }) => {
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    socket.on('check', () => {
+      console.log('check');
+      setDone(true);
+    });
+  }, []);
+  return (
+    <Card>
+      {done ? (
+        <>
+          <Checkmark size="xxLarge" />
+          <Subtitle style={{ textAlign: 'center' }}>
+            Now, move your hand to the left to proceed
+          </Subtitle>
+        </>
+      ) : (
+        <>
+          <H1 style={{ marginBottom: 0 }}>Tutorial</H1>
+          <Subtitle>Move your hand to the center of the screen</Subtitle>
+          <div
+            style={{
+              position: 'relative',
+              marginLeft: 'auto',
+              marginRight: '5rem',
+            }}
+          >
+            <img
+              alt="kiosk"
+              src={kiosk}
+              style={{ width: '20rem', height: '20rem' }}
+            />
+            <img
+              alt="hand"
+              src={hand}
+              style={{ width: '5rem', height: '6rem', position: 'absolute' }}
+              className="float_hand"
+            />
+          </div>
+        </>
+      )}
+    </Card>
+  );
+};
+
 const CarouselScreen = ({ socket }: { socket: any }) => {
   // const CarouselScreen = () => {
   const [index, setIndex] = useState(0);
 
+  useEffect(() => {
+    socket.on('swipe_right', () => {
+      console.log('swiped right');
+      setIndex((index) => index - 1);
+    });
+    socket.on('swipe_left', () => {
+      console.log('swiped left');
+      setIndex((index) => index + 1);
+    });
+  }, []);
+
   return (
     <Bg>
-      <img alt="left arrow" src={chevronLeft} className="floating_left" />
+      <img
+        alt="left arrow"
+        src={chevronLeft}
+        className="floating_left"
+        onClick={() => setIndex((index) => index - 1)}
+      />
       <Carousel
         autoPlay={false}
         animation="slide"
@@ -189,16 +271,23 @@ const CarouselScreen = ({ socket }: { socket: any }) => {
         onChange={setIndex}
         className="carousel"
       >
-        <Language />
-        <Reservation />
-        <Loading />
-        <Traveling />
-        <Military />
+        <Tutorial socket={socket} />
+        <Language socket={socket} />
+        <Reservation socket={socket} />
+        <Loading socket={socket} />
+        <Traveling socket={socket} />
+        <Military socket={socket} />
         <Loading2 />
-        <ReviewReservation />
-        <BagCheck />
+        <ReviewReservation socket={socket} />
+        <BagCheck socket={socket} />
+        <End />
       </Carousel>
-      <img alt="right arrow" src={chevronRight} className="floating_right" />
+      <img
+        alt="right arrow"
+        src={chevronRight}
+        className="floating_right"
+        onClick={() => setIndex((index) => index + 1)}
+      />
       <img
         alt="logo"
         src={logo}
