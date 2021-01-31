@@ -184,8 +184,17 @@ const BagCheck = ({ socket }: { socket: any }) => (
   </Card>
 );
 
+const End = () => (
+  <Card>
+    <Checkmark size="xxLarge" />
+    <Subtitle style={{ textAlign: 'center' }}>
+      Your ticket is being printed!
+    </Subtitle>
+  </Card>
+);
+
 const Tutorial = ({ socket }: { socket: any }) => {
-  const [done, setDone] = useState(true);
+  const [done, setDone] = useState(false);
   useEffect(() => {
     socket.on('checked', () => {
       console.log('checked');
@@ -270,6 +279,7 @@ const CarouselScreen = ({ socket }: { socket: any }) => {
         <Loading2 />
         <ReviewReservation socket={socket} />
         <BagCheck socket={socket} />
+        <End />
       </Carousel>
       <img
         alt="right arrow"
