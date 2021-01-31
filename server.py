@@ -25,13 +25,11 @@ def inBounds(x, y):
 #Reads in the 33k lines of XML
 haar_cascade = cv2.CascadeClassifier("haar_face.xml")
 
-cap = cv2.VideoCapture(0)
 
 in_frame = False
 draw = True
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "mysecret"
 
 socketIo = SocketIO(app, cors_allowed_origins="*")
 
@@ -42,12 +40,12 @@ app.host = "localhost"
 @socketIo.on('connect')
 def on_connect():
   global in_frame
-  video_capture = cv2.VideoCapture(0)
+  cap = cv2.VideoCapture(0)
   print('connected')
   counter = 0
   while True:
       # Capture frame-by-frame
-      ret, frame = video_capture.read()
+      ret, frame = cap.read()
 
       gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -59,11 +57,9 @@ def on_connect():
 
       if len(faces) > 0:
           counter += 1
-          if counter > 30:
+          if counter > 10:
               print('found face')
               socketIo.emit('face')
-              video_capture.release()
-              cv2.destroyAllWindows()
               break
       if len(faces) == 0:
           counter = 0
@@ -127,8 +123,8 @@ def on_connect():
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-cap.release()
-cv2.destroyAllWindows()
+  cap.release()
+  cv2.destroyAllWindows()
 
 @socketIo.on("message")
 def handleMessage(msg):

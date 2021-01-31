@@ -177,6 +177,17 @@ const CarouselScreen = ({ socket }: { socket: any }) => {
   // const CarouselScreen = () => {
   const [index, setIndex] = useState(0);
 
+  useEffect(() => {
+    socket.on('swipe_right', () => {
+      console.log('swiped right');
+      setIndex((index) => index + 1);
+    });
+    socket.on('swipe_left', () => {
+      console.log('swiped left');
+      setIndex((index) => index - 1);
+    });
+  }, []);
+
   return (
     <Bg>
       <img alt="left arrow" src={chevronLeft} className="floating_left" />

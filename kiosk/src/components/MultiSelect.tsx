@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const Item = styled.div`
@@ -34,11 +34,23 @@ const Bg = styled.div`
 const MultiSelect = ({
   list,
   width,
+  socket,
 }: {
   list: Array<string>;
   width: number;
+  socket: any;
 }) => {
   const [tabIndex, setTabIndex] = useState(0);
+  useEffect(() => {
+    socket.on('swipe_up', () => {
+      console.log('swiped up');
+      setTabIndex((index) => (index - 1 >= 0 ? index - 1 : list.length - 1));
+    });
+    socket.on('swipe_down', () => {
+      console.log('swiped down');
+      setTabIndex((index) => (index + 1 < list.length ? index + 1 : 0));
+    });
+  }, []);
   return (
     <Bg width={width}>
       <Indicator index={tabIndex} />
