@@ -25,10 +25,6 @@ def inBounds(x, y):
 #Reads in the 33k lines of XML
 haar_cascade = cv2.CascadeClassifier("haar_face.xml")
 
-
-in_frame = False
-draw = True
-
 app = Flask(__name__)
 
 socketIo = SocketIO(app, cors_allowed_origins="*")
@@ -37,12 +33,12 @@ app.debug = True
 
 app.host = "localhost"
 
-@socketIo.on('connect')
-def on_connect():
-  global in_frame
+def processing():
+  in_frame = False
+  draw = False
   cap = cv2.VideoCapture(0)
-  print('connected')
   counter = 0
+
   while True:
       # Capture frame-by-frame
       ret, frame = cap.read()
@@ -101,13 +97,19 @@ def on_connect():
             if not in_frame:
                 if leftOut(avgX):
                     print("Left Swipe")
+                    socketIo.emit('swipe_left')
                 if rightOut(avgX):
                     print("Right Swipe")
+                    socketIo.emit('swipe_right')
                 if topOut(minY):
                     print("Swipe Up")
+                    socketIo.emit('swipe_up')
                 if bottomOut(minY):
                     print("Swipe Down")
+                    socketIo.emit('swipe_down')
             print("CHECK" if in_frame else "OUT")
+            if in_frame:
+                socketIo.emit('check')
 
         # print(f"Hand detected {'in' if in_frame else 'out of'} bounds.")
     else:
@@ -125,6 +127,12 @@ def on_connect():
 
   cap.release()
   cv2.destroyAllWindows()
+
+@socketIo.on('connect')
+def on_connect():
+  global in_frame
+  print('connected')
+  socketIo.start_background_task(target=processing)
 
 @socketIo.on("message")
 def handleMessage(msg):

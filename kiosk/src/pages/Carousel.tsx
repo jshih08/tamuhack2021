@@ -196,8 +196,8 @@ const End = () => (
 const Tutorial = ({ socket }: { socket: any }) => {
   const [done, setDone] = useState(false);
   useEffect(() => {
-    socket.on('checked', () => {
-      console.log('checked');
+    socket.on('check', () => {
+      console.log('check');
       setDone(true);
     });
   }, []);
